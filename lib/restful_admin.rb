@@ -38,7 +38,21 @@ module RestfulAdmin
       RestfulAdmin.register(self) unless defined?(@@restful_admin_options)
       @@restful_admin_options = RestfulAdmin::Base::Configuration.new
       yield @@restful_admin_options if block_given?
-    end   
+    end
+
+    def restful_admin_column_names
+      initial_columns = self.columns.select { |col| col.type != :binary }.collect(&:name)
+      if only = @@restful_admin_options[:columns_only]
+        only_set, initial_set = [*only].to_set, initial_columns.to_set
+        columns = (initial_set & only_set) + (only_set - initial_set)
+      elsif except = @@restful_admin_options[:columns_except]
+        except_set, initial_set = [*except].to_set, initial_columns.to_set
+        columns = initial_set - except_set
+      else
+        columns = initial_columns
+      end
+      columns + @@restful_admin_options[:columns_additional].to_a
+    end
   end
 
   module Initializer

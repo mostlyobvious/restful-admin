@@ -1,0 +1,16 @@
+<%= will_paginate(@objects) %>
+<table class="resources">
+  <tr>
+    <% @current_model_columns.each do |column| %>
+      <th><%= resource_attribute_name(column) %></th>
+    <% end %>
+  </tr>
+  <% @objects.each do |current_object| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <% @current_model_columns.each do |column| %>
+        <td><%= resource_attribute_value(current_object, column) %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate(@objects) %>
