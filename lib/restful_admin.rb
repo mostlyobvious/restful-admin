@@ -35,7 +35,7 @@ module RestfulAdmin
 
   module ClassMethods
     def restful_admin(&block)
-      RestfulAdmin.register(self) unless defined?(@@restful_admin_options)
+      RestfulAdmin.register(self)
       @@restful_admin_options = RestfulAdmin::Base::Configuration.new
       yield @@restful_admin_options if block_given?
     end
