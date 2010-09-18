@@ -1,7 +1,7 @@
 module RestfulAdmin
   class ResourcesController < ApplicationController
     before_filter :set_current_object, :only => [:show, :edit, :update, :destroy]
-    helper_method :current_collection_url, :current_object_url, :object_string, :collection_string, :current_model
+    helper_method :current_collection_url, :current_object_url, :current_model
 
     respond_to :html, :xml, :json
 
@@ -12,20 +12,50 @@ module RestfulAdmin
       respond_with(@objects)
     end
 
+    def show
+      respond_with(@current_object)
+    end
+
+    def new
+      @current_object = current_model.new(params_hash)
+      instance_variable_set("@#{object_string}", @current_object)
+      respond_with(@current_object)
+    end
+
+    def create
+      @current_object = current_model.new(params_hash)
+      instance_variable_set("@#{object_string}", @current_object)
+      flash[:notice] = "Created successfully" if @current_object.save
+      respond_with(@current_object) do |format|
+        format.html { redirect_to current_collection_url }
+      end
+    end
+
+    def edit
+      respond_with(@current_object)
+    end
+
+    def update
+      flash[:notice] = "Updated successfully" if @current_object.update_attributes(params_hash)
+      respond_with(@current_object) do |format|
+        format.html { redirect_to current_collection_url }
+      end   
+    end
+
+    def destroy
+      @current_object.destroy
+      flash[:notice] = "Deleted successfully"
+      respond_with(@current_object) do |format|
+        format.html { redirect_to current_collection_url }
+      end
+    end
+
     def current_object_url(object)
       self.send("#{object_string}_path", object.id)
     end
 
     def current_collection_url
       self.send("#{collection_string}_path")
-    end
-
-    def collection_string
-      params[:resource]
-    end
-
-    def object_string
-      collection_string.singularize
     end
 
     def current_model

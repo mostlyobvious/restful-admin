@@ -7,13 +7,16 @@ h3, h4 { font-size: 100%; }
 
 h1 em, h2 em { padding-left: 1em; color: #666; font-style: normal; font-weight: normal; font-size: 75%; }
 
-header { background-color: #333; display: block; }
+header { background-color: #333; display: block; overflow: hidden; }
 header h1 { font-size: 210%; font-family: Georgia; color: #d4d4d4; padding: 1.2em 1em .6em 1em }
 
-header .menu { background-color: #39aecf; font-size: 120%; font-family: Georgia; font-weight: bold; padding-top: 1em; border-bottom: 2px solid #61b7cf; }
-header .menu ul li { margin: 0 .5em 0 .5em; padding: -2px }
-header .menu ul li a { text-decoration: none; color: #000; }
-header .menu li.selected a { background-color: #fff; border: 2px solid #61b7cf; border-bottom: 0; padding: .4em .8em 0em .8em; }
+header .menu { background-color: #39aecf; font-size: 120%; font-family: Georgia; font-weight: bold; padding-top: .6em; border-bottom: 2px solid #61b7cf; }
+header .menu ul { background-color: #39aecf; height: 1.2em; padding-left: 1em; }
+header .menu ul li { padding: -2px; float: left; }
+header .menu ul li a { text-decoration: none; color: #000; padding: .2em .8em .3em .8em; }
+header .menu li.selected a { background-color: #fff; border: 2px solid #61b7cf; border-bottom: 0; }
+
+header h1 a { text-decoration: none; color: #d4d4d4; }
 
 #main .content { padding: 1em; }
 
