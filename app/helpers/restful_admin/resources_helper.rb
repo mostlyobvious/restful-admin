@@ -1,3 +1,5 @@
+require 'auto_excerpt'
+
 module RestfulAdmin
   module ResourcesHelper
     def resource_name

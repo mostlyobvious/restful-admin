@@ -1,4 +1,5 @@
 require 'restful_admin/engine'
+require 'will_paginate'
 
 module RestfulAdmin
   @@resources = Set.new

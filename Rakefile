@@ -22,12 +22,7 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-spec = Gem::Specification.new do |s|
-  s.name = "restful_admin"
-  s.summary = "RestfulAdmin - administration panel application."
-  s.description = "RestfulAdmin. Drop-in and go, have some rest!"
-  s.files =  FileList["[A-Z]*", "lib/**/*", "config/**/*"]
-  s.version = "0.0.1"
+spec = Gem::Specification.load("restful_admin.gemspec") do |s|
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
