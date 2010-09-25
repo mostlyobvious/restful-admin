@@ -1,13 +1,14 @@
 module RestfulAdmin
   class ResourcesController < ApplicationController
     before_filter :set_current_object, :only => [:show, :edit, :update, :destroy]
+    before_filter :set_current_model_form_fields, :only => [:new, :edit, :update, :create]
+    before_filter :set_current_model_columns, :only => [:index, :show]
     helper_method :current_collection_url, :current_object_url, :current_model
 
     respond_to :html, :xml, :json
 
     def index
-      @objects = current_model.paginate(:page => params[:page])
-      @current_model_columns = current_model.restful_admin_column_names
+      @objects = current_model.order(RestfulAdmin.options[:default_index_sort_order]).paginate(:page => params[:page])
       instance_variable_set("@#{collection_string}", @objects)
       respond_with(@objects)
     end
@@ -27,7 +28,13 @@ module RestfulAdmin
       instance_variable_set("@#{object_string}", @current_object)
       flash[:notice] = "Created successfully" if @current_object.save
       respond_with(@current_object) do |format|
-        format.html { redirect_to current_collection_url }
+        format.html do
+          if @current_object.valid?
+            redirect_to params[:_save_and_add] ? new_resource_path : current_collection_url
+          else
+            render :new
+          end
+        end
       end
     end
 
@@ -38,8 +45,14 @@ module RestfulAdmin
     def update
       flash[:notice] = "Updated successfully" if @current_object.update_attributes(params_hash)
       respond_with(@current_object) do |format|
-        format.html { redirect_to current_collection_url }
-      end   
+        format.html do
+          if @current_object.valid?
+            params[:_save_and_continue] ? render(:edit) : redirect_to(current_collection_url)
+          else
+            render :edit
+          end
+        end
+      end
     end
 
     def destroy
@@ -50,12 +63,12 @@ module RestfulAdmin
       end
     end
 
-    def current_object_url(object)
-      self.send("#{object_string}_path", object.id)
+    def current_object_url(object, action = :show)
+      self.send("#{action}_resource_path", object_string, object.id)
     end
 
     def current_collection_url
-      self.send("#{collection_string}_path")
+      self.send("resources_path", collection_string)
     end
 
     def current_model
@@ -69,6 +82,14 @@ module RestfulAdmin
     
     def set_current_object
       @current_object = instance_variable_set("@#{object_string}", find_object(params[:id]))
+    end
+
+    def set_current_model_columns
+      @current_model_columns = current_model.restful_admin_column_names
+    end
+
+    def set_current_model_form_fields
+      @current_model_form_fields = current_model.restful_admin_form_field_names
     end
 
     def find_object(id)

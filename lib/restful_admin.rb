@@ -1,8 +1,23 @@
 require 'restful_admin/engine'
+# require external libraries here unless we have access to main apps Gemfile
 require 'will_paginate'
+require 'simple_form'
 
 module RestfulAdmin
   @@resources = Set.new
+  @@options = {
+    :save_label => "Save",
+    :save_and_continue_label => "Save and continue editing",
+    :save_and_add_label => "Save and add another",
+    :new_label => "+ Add",
+    :show_label => "Show",
+    :edit_label => "Edit",
+    :destroy_label => "Delete",
+    :destroy_confirm => "Are you sure want to destroy this record?",
+    :default_index_action => :edit,
+    :default_index_sort_order => 'created_at DESC'
+  }
+  mattr_reader :options
 
   def self.resources
     @@resources.to_a
@@ -22,6 +37,7 @@ module RestfulAdmin
     class Configuration
       def initialize(options = {})
         @options = options
+        @options[:edit_link_columns] = %w{id}
       end
       
       def method_missing(method, args)
@@ -53,6 +69,14 @@ module RestfulAdmin
         columns = initial_columns
       end
       columns + @@restful_admin_options[:columns_additional].to_a
+    end
+
+    def restful_admin_form_field_names
+      self.columns.select { |col| !(col.type == :binary || %w{id updated_at created_at}.include?(col.name)) }.collect(&:name)
+    end
+
+    def restful_admin_edit_link_column_names
+      @@restful_admin_options[:edit_link_columns]
     end
   end
 

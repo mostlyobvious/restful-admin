@@ -1,0 +1,18 @@
+<% content_for :actions do %>
+  <div class="left">  
+    <h1></h2>
+  </div>
+  <div class="right">
+    <%= resource_edit_link %>
+    <%= resource_destroy_link %>
+  </div>
+<% end %>
+
+<table class="resources-show">
+<% @current_model_columns.each do |column_name| %>
+  <tr>
+    <td class="resource-attribute"><%= resource_attribute_name(column_name) %></td>
+    <td class="resource-value"><%= resource_attribute_value(@current_object, column_name) %></td>
+  </tr>
+<% end %>
+</table>

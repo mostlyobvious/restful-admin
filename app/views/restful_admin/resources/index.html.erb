@@ -1,4 +1,12 @@
-<%= will_paginate(@objects) %>
+<% content_for :actions do %>
+  <div class="left">  
+    <%= link_to RestfulAdmin.options[:new_label], new_resource_path, :class => 'button' %>
+  </div>
+  <div class="right">
+    <%= will_paginate(@objects) %>
+  </div>
+<% end %>
+
 <table class="resources">
   <tr>
     <% @current_model_columns.each do |column| %>
@@ -8,9 +16,8 @@
   <% @objects.each do |current_object| %>
     <tr class="<%= cycle('even', 'odd') %>">
       <% @current_model_columns.each do |column| %>
-        <td><%= resource_attribute_value(current_object, column) %></td>
+        <td><%= resource_attribute_value(current_object, column, :linkify => true, :excerpt => true) %></td>
       <% end %>
     </tr>
   <% end %>
 </table>
-<%= will_paginate(@objects) %>

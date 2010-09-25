@@ -1,0 +1,6 @@
+<% @current_model_form_fields.each do |field_name| %>
+  <%= f.input field_name %>
+<% end %>
+<div style="border-top: 1px solid #e0e0e0" />
+<%= f.submit RestfulAdmin.options[:save_label], :name => '_save', :class => 'button' %>
+

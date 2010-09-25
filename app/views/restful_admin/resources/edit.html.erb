@@ -1,0 +1,14 @@
+<% content_for :actions do %>
+  <div class="left">  
+    <h1></h2>
+  </div>
+  <div class="right">  
+    <%= resource_show_link %>
+    <%= resource_destroy_link %>
+  </div>
+<% end %>
+
+<%= simple_form_for @current_object, :url => { :action => 'update' } do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= f.submit RestfulAdmin.options[:save_and_continue_label], :name => '_save_and_continue', :class => 'button' %>
+<% end %>

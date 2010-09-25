@@ -5,7 +5,7 @@ module RestfulAdmin
 
     protected
     def collection_string
-      params[:resource]
+      params[:resource].pluralize # ensure pluralization
     end
 
     def object_string

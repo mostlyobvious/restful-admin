@@ -16,9 +16,15 @@ header .menu ul li { padding: -2px; float: left; }
 header .menu ul li a { text-decoration: none; color: #000; padding: .2em .8em .3em .8em; }
 header .menu li.selected a { background-color: #fff; border: 2px solid #61b7cf; border-bottom: 0; }
 
+div.actions { display: table; width: 100%; padding: .5em 0; height: 1em; }
+div.actions div { display: table-cell; vertical-align: top; }
+div.actions div.right { float: right; }
+
+.button { border: 1px solid #39aecf; color: #000; display: inline-block; padding: 4px 10px; text-decoration: none; background-color: #fff; }
+
 header h1 a { text-decoration: none; color: #d4d4d4; }
 
-#main .content { padding: 1em; }
+#main .content { padding: .5em 1em; }
 
 table.resources { width: 100%; font-size: 90%; }
 table.resources tr { line-height: 1.6em; }
@@ -28,22 +34,64 @@ table.resources tr:last-child { border-bottom: 1px solid #e0e0e0; }
 table.resources tr.odd { background-color: #d7e3f4; }
 table.resources tr:hover { background-color: #fffbb4 }
 table.resources tr:hover td { border-color: #fffbb4 }
+table.resources a { text-decoration: none; color: #000; display: inline-block; border-bottom: 1px dotted #000; }
+
+table.resources-show { width: 100%; }
+table.resources-show tr { border: 1px solid #f0f0f0; border-right: none; border-left: none; }
+table.resources-show td { padding: .5em 1em }
+table.resources-show td.resource-attribute { width: 10em; color: #666}
 
 .pagination a, .pagination span, .pagination em {
-  padding: 2px 5px;
-  margin-right: 5px; 
+  padding: 4px 10px;
+  margin-left: 5px; 
   display: block;
   float: left;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid #39aecf;
 }
 
-.pagination em {
-  font-weight: bold;  
-  font-style: normal;
+.pagination .disabled { color: #e0e0e0; border-color: #e0e0e0; }
+.pagination em { font-weight: bold; font-style: normal; color: #000; }
+.pagination a { text-decoration: none; color: #000; }
+
+form.simple_form textarea, form.simple_form input[type="text"], form.simple_form input[type="number"] {
+  border: #e0e0e0 1px solid;
+  width: 300px;
+  padding: 4px;
+  margin-bottom: 4px;
 }
 
-.pagination a {
-  text-decoration: none;  
+form.simple_form textarea:focus, form.simple_form input[type="text"]:focus, form.simple_form input[type="number"]:focus {
+  border: #39aecf 1px solid;
 }
 
+form.simple_form label.required { font-weight: bold; }
+form.simple_form textarea { width: 600px; }
+form.simple_form div.input { border-top: 1px solid #f0f0f0; padding: .5em }
+
+form.simple_form input[type="checkbox"] {
+  margin-left: 9em;
+}
+
+form.simple_form input[type="submit"] {
+  margin-top: 1em;
+}
+
+form.simple_form label.string,
+form.simple_form label.text,
+form.simple_form label.float,
+form.simple_form label.decimal,
+form.simple_form label.integer {
+  display: inline-block;
+  width: 10em;
+  vertical-align: top;
+  padding: 4px 0em;
+  color: #666;
+}
+
+form.simple_form label.boolean {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 3px;
+}
+
+form.simple_form span.error { color: #ff0000; padding: 4px 0 4px 1em; }

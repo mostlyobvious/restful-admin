@@ -1,0 +1,4 @@
+<%= simple_form_for @current_object, :url => { :action => 'create' } do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= f.submit RestfulAdmin.options[:save_and_add_label], :name => '_save_and_add', :class => 'button' %>
+<% end %>
