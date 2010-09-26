@@ -80,6 +80,7 @@ form.simple_form label.string,
 form.simple_form label.text,
 form.simple_form label.float,
 form.simple_form label.decimal,
+form.simple_form label.datetime,
 form.simple_form label.integer {
   display: inline-block;
   width: 10em;
