@@ -38,6 +38,7 @@ module RestfulAdmin
       def initialize(options = {})
         @options = options
         @options[:columns_linkified] = %w{id}
+        @options[:columns_formatted] = {}
       end
       
       def method_missing(method, args)
@@ -77,6 +78,10 @@ module RestfulAdmin
 
     def restful_admin_linkified_column_names
       @@restful_admin_options[:columns_linkified]
+    end
+
+    def restful_admin_formatted_column_names
+      HashWithIndifferentAccess.new(@@restful_admin_options[:columns_formatted])
     end
   end
 

@@ -12,7 +12,7 @@
 <% @current_model_columns.each do |column_name| %>
   <tr>
     <td class="resource-attribute"><%= resource_attribute_name(column_name) %></td>
-    <td class="resource-value"><%= resource_attribute_value(@current_object, column_name) %></td>
+    <td class="resource-value"><%= resource_attribute_value(@current_object, column_name, :formatted => true) %></td>
   </tr>
 <% end %>
 </table>

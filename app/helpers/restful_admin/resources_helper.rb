@@ -20,23 +20,23 @@ module RestfulAdmin
       output = if column
         case column.type
         when :datetime
-          datetime_value(value, options)
+          datetime_value(value, column_name, options)
         when :text, :string           
-          string_value(value, options)
+          string_value(value, column_name, options)
         when :boolean
-          boolean_value(value, options)
+          boolean_value(value, column_name, options)
         else
           value
         end
       else
         if [true, false].include?(value)
-          boolean_value(value, options)
+          boolean_value(value, column_name, options)
         else
           value
         end
       end
       if options[:linkify] && current_model.restful_admin_linkified_column_names.include?(column_name)
-        linkify_value(output)
+        linkify_value(object, output)
       else
         output
       end
@@ -55,15 +55,18 @@ module RestfulAdmin
     end
 
     private
-    def datetime_value(value, options = {})
+    def datetime_value(value, column_name, options = {})
       I18n.l(value)
     end
 
-    def string_value(value, options = {})
+    def string_value(value, column_name, options = {})
+      if options[:formatted] && formatter = current_model.restful_admin_formatted_column_names[column_name]
+        value = send(formatter, value).html_safe
+      end
       options[:excerpt] ? AutoExcerpt.new(value) : value
     end
 
-    def boolean_value(value, options = {})
+    def boolean_value(value, column_name, options = {})
       value ? image_tag('icon-yes.gif') : image_tag('icon-no.gif')
     end
 
