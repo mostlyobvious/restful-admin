@@ -63,7 +63,10 @@ module RestfulAdmin
       if options[:formatted] && formatter = current_model.restful_admin_formatted_column_names[column_name]
         value = send(formatter, value).html_safe
       end
-      options[:excerpt] ? AutoExcerpt.new(value) : value
+      if options[:excerpt] && excerpt_options = current_model.restful_admin_excerpted_column_names[column_name]
+        value = AutoExcerpt.new(value, excerpt_options.symbolize_keys)
+      end
+      value
     end
 
     def boolean_value(value, column_name, options = {})
