@@ -2,6 +2,7 @@ require 'restful_admin/engine'
 # require external libraries here unless we have access to main apps Gemfile
 require 'will_paginate'
 require 'simple_form'
+require 'responders'
 
 module RestfulAdmin
   @@resources = Set.new

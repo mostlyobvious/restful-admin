@@ -9,5 +9,6 @@ spec = Gem::Specification.new do |s|
   s.add_dependency "will_paginate", "~> 3.0pre2"
   s.add_dependency "auto_excerpt"
   s.add_dependency "simple_form"
+  s.add_dependency "responders"
 end
 

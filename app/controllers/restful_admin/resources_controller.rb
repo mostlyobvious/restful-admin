@@ -5,6 +5,7 @@ module RestfulAdmin
     before_filter :set_current_model_columns, :only => [:index, :show]
     helper_method :current_collection_url, :current_object_url, :current_model
 
+    responders :flash
     respond_to :html, :xml, :json
 
     def index
@@ -26,7 +27,7 @@ module RestfulAdmin
     def create
       @current_object = current_model.new(params_hash)
       instance_variable_set("@#{object_string}", @current_object)
-      flash[:notice] = "Created successfully" if @current_object.save
+      @current_object.save
       respond_with(@current_object) do |format|
         format.html do
           if @current_object.valid?
@@ -43,7 +44,7 @@ module RestfulAdmin
     end
 
     def update
-      flash[:notice] = "Updated successfully" if @current_object.update_attributes(params_hash)
+      @current_object.update_attributes(params_hash)
       respond_with(@current_object) do |format|
         format.html do
           if @current_object.valid?
@@ -57,7 +58,6 @@ module RestfulAdmin
 
     def destroy
       @current_object.destroy
-      flash[:notice] = "Deleted successfully"
       respond_with(@current_object) do |format|
         format.html { redirect_to current_collection_url }
       end

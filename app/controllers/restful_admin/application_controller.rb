@@ -1,5 +1,9 @@
+require 'app_responder'
+
 module RestfulAdmin
   class ApplicationController < ActionController::Base
+    self.responder = AppResponder
+
     layout 'restful_admin'
     helper_method :object_string, :collection_string
 
