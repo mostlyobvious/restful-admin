@@ -1,4 +1,6 @@
 Dummy::Application.routes.draw do
+  mount RestfulAdmin::Engine => "/admin", :as => "restful_admin"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

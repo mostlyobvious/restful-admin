@@ -5,11 +5,11 @@ module RestfulAdmin
 
     protected
     def collection_string
-      params[:resource].pluralize # ensure pluralization
+      params[:resource].try(:pluralize) # ensure pluralization
     end
 
     def object_string
-      collection_string.singularize if collection_string
+      collection_string.try(:singularize)
     end
   end
 end
