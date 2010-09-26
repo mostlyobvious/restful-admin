@@ -16,28 +16,29 @@ module RestfulAdmin
 
     def resource_attribute_value(object, column_name, options = {})
       value = object.send(column_name)
-      if column = current_model.columns_hash[column_name]
-        column_value = case column.type
+      column = current_model.columns_hash[column_name]
+      output = if column
+        case column.type
         when :datetime
-          I18n.l(value)
+          datetime_value(value, options)
         when :text, :string           
-          options[:excerpt] ? AutoExcerpt.new(value) : value
+          string_value(value, options)
         when :boolean
-          value ? image_tag('icon-yes.gif') : image_tag('icon-no.gif')
+          boolean_value(value, options)
         else
           value
-        end
-        if options[:linkify] && current_model.restful_admin_edit_link_column_names.include?(column.name)
-          link_to(column_value, current_object_url(object, RestfulAdmin.options[:default_index_action])) 
-        else
-          column_value
         end
       else
         if [true, false].include?(value)
-          value ? image_tag('icon-yes.gif') : image_tag('icon-no.gif')
+          boolean_value(value, options)
         else
           value
         end
+      end
+      if options[:linkify] && current_model.restful_admin_linkified_column_names.include?(column_name)
+        linkify_value(output)
+      else
+        output
       end
     end
 
@@ -51,6 +52,23 @@ module RestfulAdmin
 
     def resource_destroy_link
       link_to RestfulAdmin.options[:destroy_label], destroy_resource_path, :class => 'button', :method => 'delete', :confirm => RestfulAdmin.options[:destroy_confirm]
+    end
+
+    private
+    def datetime_value(value, options = {})
+      I18n.l(value)
+    end
+
+    def string_value(value, options = {})
+      options[:excerpt] ? AutoExcerpt.new(value) : value
+    end
+
+    def boolean_value(value, options = {})
+      value ? image_tag('icon-yes.gif') : image_tag('icon-no.gif')
+    end
+
+    def linkify_value(object, value)
+      link_to(value, current_object_url(object, RestfulAdmin.options[:default_index_action])) 
     end
   end
 end

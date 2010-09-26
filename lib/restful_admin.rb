@@ -37,7 +37,7 @@ module RestfulAdmin
     class Configuration
       def initialize(options = {})
         @options = options
-        @options[:edit_link_columns] = %w{id}
+        @options[:columns_linkified] = %w{id}
       end
       
       def method_missing(method, args)
@@ -75,8 +75,8 @@ module RestfulAdmin
       self.columns.select { |col| !(col.type == :binary || %w{id updated_at created_at}.include?(col.name)) }.collect(&:name)
     end
 
-    def restful_admin_edit_link_column_names
-      @@restful_admin_options[:edit_link_columns]
+    def restful_admin_linkified_column_names
+      @@restful_admin_options[:columns_linkified]
     end
   end
 
