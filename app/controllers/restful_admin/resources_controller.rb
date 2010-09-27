@@ -9,7 +9,8 @@ module RestfulAdmin
     respond_to :html, :xml, :json
 
     def index
-      @objects = current_model.order(RestfulAdmin.options[:default_index_sort_order]).paginate(:page => params[:page])
+      @search = params[:search].present?? current_model.search(params[:search]) : current_model.order(RestfulAdmin.options[:default_index_sort_order]).search
+      @objects = @search.paginate(:page => params[:page])
       instance_variable_set("@#{collection_string}", @objects)
       respond_with(@objects)
     end

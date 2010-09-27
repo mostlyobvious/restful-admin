@@ -10,5 +10,6 @@ spec = Gem::Specification.new do |s|
   s.add_dependency "auto_excerpt"
   s.add_dependency "simple_form"
   s.add_dependency "responders"
+  s.add_dependency "meta_search"
 end
 

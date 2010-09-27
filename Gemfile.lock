@@ -44,6 +44,17 @@ GIT
       thor (~> 0.14.0)
 
 GIT
+  remote: git://github.com/pawelpacana/meta_search.git
+  revision: 477cff4909cf38ee7e2aaa5c3ddf5f3918086081
+  branch: rails3.1
+  specs:
+    meta_search (0.9.4)
+      actionpack (~> 3.1.0)
+      activerecord (~> 3.1.0)
+      activesupport (~> 3.1.0)
+      arel (~> 1.0.1)
+
+GIT
   remote: git://github.com/rails/arel.git
   revision: 9beb4ff24f5e7b33923efbfd915cc87cb67b5de8
   specs:
@@ -108,6 +119,7 @@ DEPENDENCIES
   auto_excerpt
   capybara (>= 0.3.9)
   factory_girl_rails
+  meta_search!
   rails!
   responders
   simple_form

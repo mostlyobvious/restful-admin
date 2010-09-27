@@ -14,6 +14,11 @@ module RestfulAdmin
       current_model.human_attribute_name(column_name)
     end
 
+    def resource_attribute_sort_link(column_name)
+      label = resource_attribute_name(column_name)
+      current_model.column_names.include?(column_name) ? sort_link(@search, column_name, label) : label
+    end
+
     def resource_attribute_value(object, column_name, options = {})
       value = object.send(column_name)
       column = current_model.columns_hash[column_name]

@@ -6,6 +6,7 @@ gem "will_paginate", "~> 3.0.pre2"
 gem "simple_form"
 gem "auto_excerpt"
 gem "responders"
+gem "meta_search", :git => "git://github.com/pawelpacana/meta_search.git", :branch => "rails3.1"
 
 group :test do
   gem "capybara", ">= 0.3.9"

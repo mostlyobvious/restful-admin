@@ -3,6 +3,8 @@ require 'restful_admin/engine'
 require 'will_paginate'
 require 'simple_form'
 require 'responders'
+require 'meta_search'
+
 
 module RestfulAdmin
   @@resources = Set.new
@@ -13,6 +15,7 @@ module RestfulAdmin
     :new_label => "+ Add",
     :show_label => "Show",
     :edit_label => "Edit",
+    :search_label => "Search",
     :destroy_label => "Delete",
     :destroy_confirm => "Are you sure want to destroy this record?",
     :default_index_action => :edit,
@@ -56,6 +59,10 @@ module RestfulAdmin
   module ClassMethods
     def restful_admin(&block)
       RestfulAdmin.register(self)
+      scope :restful_admin_quick_search, lambda { |param|
+        where([restful_admin_quick_search_column_names.collect { |column| "#{column} LIKE ?" }.join(" OR "), *["%#{param}%"] * restful_admin_quick_search_column_names.size]) 
+      }
+      search_methods :restful_admin_quick_search
       @@restful_admin_options = RestfulAdmin::Base::Configuration.new
       yield @@restful_admin_options if block_given?
     end
@@ -89,7 +96,11 @@ module RestfulAdmin
     def restful_admin_excerpted_column_names
       HashWithIndifferentAccess.new(@@restful_admin_options[:columns_excerpted])
     end
-  end
+
+    def restful_admin_quick_search_column_names
+      self.columns.select { |column| [:text, :string].include?(column.type) }.collect(&:name)
+    end
+ end
 
   module Initializer
     def self.load_models(models_path)
