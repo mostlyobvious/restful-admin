@@ -3,10 +3,10 @@
     <%= link_to RestfulAdmin.options[:new_label], new_resource_path, :class => 'button' %>
   </div>
   <div class="middle">
-    <%= form_for @search, :url => { :action => 'index' } do |f| %>
-      <%= f.text_field :restful_admin_quick_search %>
-      <%= f.submit RestfulAdmin.options[:search_label], :class => 'button' %>
-    <% end %>
+    <%#= form_for @search, :url => { :action => 'index' } do |f| %>
+      <%#= f.text_field :restful_admin_quick_search %>
+      <%#= f.submit RestfulAdmin.options[:search_label], :class => 'button' %>
+    <%# end %>
   </div>
   <div class="right">
     <%= will_paginate(@objects) %>
