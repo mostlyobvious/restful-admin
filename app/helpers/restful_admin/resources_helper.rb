@@ -61,7 +61,7 @@ module RestfulAdmin
 
     private
     def datetime_value(value, column_name, options = {})
-      I18n.l(value)
+      I18n.l(value) if value
     end
 
     def string_value(value, column_name, options = {})
