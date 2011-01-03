@@ -1,3 +1,66 @@
 = RestfulAdmin
 
-This project rocks and uses MIT-LICENSE.
+Warning: ALPHA state and mostly BROKEN due to constant Rails codebase change, waiting for 3.1.0 release. Also no tests, use at your own risk.
+
+= Howto
+
+== Add to your Gemfile:
+
+  gem 'restful_admin',  :git => 'git://github.com/pawelpacana/restful_admin'
+  gem "rails",          :git => "git://github.com/rails/rails.git"
+  gem "arel",           :git => "git://github.com/rails/arel.git"
+  gem "rack",           :git => "git://github.com/rack/rack.git"
+
+== In config/routes.rb:
+
+  mount RestfulAdmin::Engine => /admin, :as => 'restful_admin'
+
+== In your models:
+
+  class Event < ActiveRecord::Base
+    restful_admin
+  end
+
+== Model configuration example:
+
+  restful_admin do |config|
+    c.columns_only %w(id title body updated_at)         # show only some columns
+    c.columns_except %w(body id)                        # or only some not
+    c.columns_additional %w(test)                       # this can be model method
+    c.columns_linkified %(title id)                     # which colums are links to show/edit
+    c.columns_formatted :body => :textilize             # textilize field before display
+    c.columns_excerpted :body => { :characters => 20 }  # show no more than 20 characters
+  end
+
+NOTE: Some options are mutually exclusive but given as an overview.
+
+== RestfulAdmin config example:
+
+  RestfulAdmin[:save_label] = "Save!"
+
+Available options with defaults:
+
+  :save_label => "Save"
+  :save_and_continue_label => "Save and continue editing"
+  :save_and_add_label => "Save and add another"
+  :new_label => "+ Add"
+  :show_label => "Show"
+  :edit_label => "Edit"
+  :search_label => "Search"
+  :destroy_label => "Delete"
+  :destroy_confirm => "Are you sure want to destroy this record?"
+  :default_index_action => :edit
+  :default_index_sort_order => 'created_at DESC'
+
+= Features needed
+
+  * tests!
+  * relations support
+  * filtering and search (port meta_search to 3.1.0 changes)
+  * pluggable authentication and authorization, like in rails_admin
+  * custom actions for models available in UI
+  * popular gems support out-of-the-box: paperclip, AASM, acts_as_list, ...
+
+= Copyright
+
+Copyright (c) 2010 - 2011 Paweł Pacana. Released under MIT license.
